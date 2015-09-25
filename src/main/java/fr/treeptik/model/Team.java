@@ -1,5 +1,6 @@
 package fr.treeptik.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,9 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
-public class Team {
+public class Team implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +29,9 @@ public class Team {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="team")
 	private List<Membre> membres;
+	
+	@OneToOne
+    private Responsable responsable;
 
 	public Integer getId() {
 		return id;

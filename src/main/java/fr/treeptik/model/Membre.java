@@ -1,5 +1,7 @@
 package fr.treeptik.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Membre {
+public class Membre implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,8 +26,33 @@ private String name;
 @ManyToOne 
 private Team team;
 
-@ManyToOne 
-private Responsable responsable;
+
+
+@ManyToOne
+private PetitDej petitdej;
+
+
+private TypeDej preference;
+
+
+
+
+
+public PetitDej getPetitdej() {
+	return petitdej;
+}
+
+public void setPetitdej(PetitDej petitdej) {
+	this.petitdej = petitdej;
+}
+
+public TypeDej getPreference() {
+	return preference;
+}
+
+public void setPreference(TypeDej preference) {
+	this.preference = preference;
+}
 
 public Integer getId() {
 	return id;
@@ -44,14 +76,6 @@ public Team getTeam() {
 
 public void setTeam(Team team) {
 	this.team = team;
-}
-
-public Responsable getResponsable() {
-	return responsable;
-}
-
-public void setResponsable(Responsable responsable) {
-	this.responsable = responsable;
 }
 
 

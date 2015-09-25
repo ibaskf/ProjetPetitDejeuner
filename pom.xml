@@ -6,9 +6,9 @@
   <packaging>war</packaging>
   <properties>
 		<java.version>1.8</java.version>
-		<jdbc.url>jdbc:mysql://localhost:3306/springmvcexo</jdbc.url>
+		<jdbc.url>jdbc:mysql://localhost:3306/petitdej</jdbc.url>
 		<jdbc.user>root</jdbc.user>
-		<jdbc.password>stagiaire</jdbc.password>
+		<jdbc.password>root</jdbc.password>
 	</properties>
 
 	<dependencies>
