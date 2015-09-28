@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -32,6 +33,9 @@ private String firstname;
 
 @ManyToOne 
 private Team team;
+
+@OneToMany(mappedBy="membre")
+private List<Appreciation> appreciations;
 
 
 

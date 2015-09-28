@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import fr.treeptik.model.Membre;
+import fr.treeptik.model.PetitDej;
 
 
 @Repository

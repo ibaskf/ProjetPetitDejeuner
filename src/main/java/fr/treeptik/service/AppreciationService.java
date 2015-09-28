@@ -13,6 +13,7 @@ import fr.treeptik.dao.AppreciationDAO;
 import fr.treeptik.exception.DAOException;
 import fr.treeptik.exception.ServiceException;
 import fr.treeptik.model.Appreciation;
+import fr.treeptik.model.PetitDej;
 @Service
 public class AppreciationService {
 
@@ -71,6 +72,10 @@ public class AppreciationService {
 
 	public Appreciation findById(Integer id){
 		return appreciationDAO.findById(id);
+	}
+	
+	public List<Appreciation> findByPetitDej(PetitDej petitd){
+		return appreciationDAO.findByPetitdej(petitd);
 	}
  
 	public AppreciationDAO getAppreciationDAO() {

@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import fr.treeptik.model.Appreciation;
+import fr.treeptik.model.PetitDej;
 
 
 @Repository
@@ -15,7 +16,7 @@ public interface AppreciationDAO extends JpaRepository<Appreciation,Integer>{
 
 
 	Appreciation findById(Integer id);
-	
+	List<Appreciation> findByPetitdej(PetitDej petitd);
 	
 	
 	

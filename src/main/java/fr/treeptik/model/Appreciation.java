@@ -27,7 +27,7 @@ public class Appreciation implements Serializable {
 	private Integer id;
 
 	
-	@OneToOne
+	@ManyToOne
 	private Membre membre;
 	
 	@ManyToOne

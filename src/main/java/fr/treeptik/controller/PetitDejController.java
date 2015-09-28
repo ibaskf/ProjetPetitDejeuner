@@ -24,6 +24,7 @@ import fr.treeptik.exception.ServiceException;
 import fr.treeptik.model.Appreciation;
 import fr.treeptik.model.Membre;
 import fr.treeptik.model.PetitDej;
+import fr.treeptik.service.AppreciationService;
 import fr.treeptik.service.MembreService;
 import fr.treeptik.service.PetitDejService;
 import fr.treeptik.service.TeamService;
@@ -37,6 +38,9 @@ public class PetitDejController {
 
 	@Autowired
 	private MembreService membreservice;
+	
+	@Autowired
+	private AppreciationService appreciationservice;
 	
 	@InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -93,6 +97,7 @@ public class PetitDejController {
 		modelAndView.addObject("login", membrelogin);
 		modelAndView.addObject("datejour", datejour);
 		modelAndView.addObject("appreciation", new Appreciation());
+		modelAndView.addObject("appreciations", appreciationservice.findByPetitDej(petitDejservice.findById(id)));
 		return modelAndView;
 	}
 
@@ -102,8 +107,10 @@ public class PetitDejController {
 			ModelAndView modelAndView = new ModelAndView("petitdej/petitdej");
 			PetitDej petitDej = petitDejservice.findById(id);
 			modelAndView.addObject("petitDej", petitDej);
+			modelAndView.addObject("membres", petitDejservice.find(id));
 			return modelAndView;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return list();
 		}
 	}
