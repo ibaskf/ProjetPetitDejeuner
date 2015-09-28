@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,9 @@ public class PetitDejController {
         		return super.convertElement(element);
         	}
         });
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd-M-yyyy");
+        
+        binder.registerCustomEditor(Date.class, "date", new CustomDateEditor(sdf2, false));
     }
 
 	@RequestMapping(value = "/new.html", method = RequestMethod.GET)

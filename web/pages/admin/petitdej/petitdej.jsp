@@ -11,13 +11,19 @@
 <script type="text/javascript"> 
 function validateForm()
 {
-	
-	var re = new RegExp("^([0-9]{4})\-([0-9]{2})\-([0-9]{2})$");
-if(!re.test(document.frm.date.value))
+	var daten=new Date();
+	 var datenow=daten.getDate()+"-"+(daten.getMonth()+1)+"-"+daten.getFullYear();
+	var re = new RegExp("^([0-9]{2})\-([0-9]{2})\-([0-9]{4})$");
+	alert(datenow)
+if(!re.test(document.frm.date.value) )
 {
-alert("format date :aaaa-mm-dd");
+alert("format date :dd-mm-yyyy");
 document.frm.date.focus();
 return false;
+}
+if(document.frm.date.value < datenow){
+	alert("veuillez saisir une date posterieure a aujourdhui")
+	return false
 }
 }
 </script>
@@ -36,8 +42,8 @@ return false;
 </label>
 
  <label>Date:</label>
-<input id="date" name="date" type="text" 
-        value="<fmt:formatDate value="${reg.date}" 
+<input id="date" name="date" type="date" 
+        value="<fmt:formatDate value="${date}" 
         type="date" pattern="dd-MM-yyyy" />" required="true"/>
 	<br/>	
 	 <label>Participant:</label>
