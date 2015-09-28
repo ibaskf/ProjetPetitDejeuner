@@ -42,6 +42,7 @@ private List<Appreciation> appreciations;
 @ManyToMany(mappedBy="membres")
 private List<PetitDej> petitdejs;
 
+
 @Enumerated(EnumType.STRING)	
 private TypeDej preference;
 
@@ -50,13 +51,6 @@ private TypeDej preference;
 private String login;
 
 
-private String  password;
-
-@Column(name = "enabled")
-private Boolean enabled;
-
-@Column(name = "role")
-private String role;
 
 
 
@@ -69,29 +63,7 @@ public void setLogin(String login) {
 	this.login = login;
 }
 
-public String getPassword() {
-	return password;
-}
 
-public void setPassword(String password) {
-	this.password = password;
-}
-
-public Boolean getEnabled() {
-	return enabled;
-}
-
-public void setEnabled(Boolean enabled) {
-	this.enabled = enabled;
-}
-
-public String getRole() {
-	return role;
-}
-
-public void setRole(String role) {
-	this.role = role;
-}
 
 public List<PetitDej> getPetitdejs() {
 	return petitdejs;

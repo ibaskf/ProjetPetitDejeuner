@@ -78,6 +78,14 @@ public class PetitDejService {
 	
 	}
 	
+	@Transactional
+	public void removeparticipant(Integer id,Integer idm) throws DAOException{
+	  
+		petitDejDAO.removeParticipant(id, idm);
+			
+	
+	}
+	
 	public List<PetitDej> findByName(String name){
 		return petitDejDAO.findByName(name);
 		

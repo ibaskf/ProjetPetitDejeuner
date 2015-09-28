@@ -20,7 +20,9 @@ public interface PetitDejDAO extends JpaRepository<PetitDej,Integer>{
 	@Query("SELECT m from Membre m JOIN m.petitdejs p where :id in (p)")
     public List<Membre> find(@Param("id") Integer id);
 
-	
+	@Modifying
+	@Query(value="delete from petitdej_membre where membres_id= :idm and petitdejs_id= :id",nativeQuery=true)
+	public void removeParticipant(@Param("id") Integer id,@Param("idm") Integer idm);
 	
 	
 

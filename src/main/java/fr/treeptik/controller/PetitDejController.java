@@ -164,6 +164,24 @@ public class PetitDejController {
 			return modelAndView;
 		}
 	}
+	
+
+	@RequestMapping(value = "/deletepart.html", method = RequestMethod.GET)
+	public ModelAndView deletepart(@ModelAttribute("id") Integer id,@ModelAttribute("idm") Integer idm) throws ServiceException {
+		try {
+			
+				petitDejservice.removeparticipant(id,idm);
+			
+			ModelAndView modelAndView = new ModelAndView("redirect:list.html");
+			return modelAndView;
+		} catch (Exception e) {
+		
+			ModelAndView modelAndView = null;
+			modelAndView.addObject("error", e.getMessage());
+			return modelAndView;
+		}
+	}
+
 
 	@RequestMapping(value = "/listparticipant.html", method = RequestMethod.GET)
 	public ModelAndView listparticipant(@ModelAttribute("id") Integer id) {
