@@ -68,10 +68,7 @@ public class AgendaService {
 	
 	}
 	
-	public List<Agenda> findByName(String name){
-		return agendaDAO.findByName(name);
-		
-	}
+
 
 	public Agenda findById(Integer id){
 		return agendaDAO.findById(id);

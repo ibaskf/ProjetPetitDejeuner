@@ -11,7 +11,7 @@
 	<c:if test="${not empty error}">
 		<label style="color: red;"><c:out value="${error}" /></label>
 	</c:if>
-	<form:form action="save.do" commandName="membre" method="POST">
+	<form:form action="save.html" commandName="membre" method="POST">
 		<form:hidden path="id" />
 		<label>Nom:</label>
 		<form:input path="name" id="name" />

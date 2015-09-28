@@ -67,11 +67,7 @@ public class AppreciationService {
 			
 	
 	}
-	
-	public List<Appreciation> findByName(String name){
-		return appreciationDAO.findByName(name);
-		
-	}
+
 
 	public Appreciation findById(Integer id){
 		return appreciationDAO.findById(id);

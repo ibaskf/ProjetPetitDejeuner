@@ -13,7 +13,7 @@ import fr.treeptik.model.Agenda;
 @Repository
 public interface AgendaDAO extends JpaRepository<Agenda,Integer>{
 
-	List<Agenda> findByName(String name);
+
 	Agenda findById(Integer id);
 	
 	

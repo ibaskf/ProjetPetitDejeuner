@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import fr.treeptik.dao.PetitDejDAO;
 import fr.treeptik.exception.DAOException;
 import fr.treeptik.exception.ServiceException;
+import fr.treeptik.model.Membre;
 import fr.treeptik.model.PetitDej;
 @Service
 public class PetitDejService {
@@ -40,6 +41,14 @@ public class PetitDejService {
 		}
 	}
 	
+	public List<Membre> find(Integer id) throws ServiceException, DAOException {
+		try {
+			return petitDejDAO.find(id);
+		} catch (PersistenceException e) {
+			throw new ServiceException("erreur save personne", e);
+		}
+	}
+	
 
 
 		
@@ -58,6 +67,7 @@ public class PetitDejService {
 			
 	
 	}
+	
 	
 	
 	@Transactional

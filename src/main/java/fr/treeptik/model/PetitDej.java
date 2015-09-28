@@ -11,10 +11,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
+@Table(name="petitdej")
 public class PetitDej implements Serializable {
 	
 	/**
@@ -25,11 +30,12 @@ public class PetitDej implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy="petitdej")
+	@ManyToMany(fetch = FetchType.LAZY)
 	List<Membre> membres;
 	
-	
+	@Temporal(TemporalType.DATE) 
 	private Date date;
 	
 	@ManyToOne
@@ -41,6 +47,9 @@ public class PetitDej implements Serializable {
     private TypeDej type;
 	
    private String description;
+   
+  @OneToMany(mappedBy="petitdej")
+   private List<Appreciation> appreciations;
    
   
 
@@ -98,6 +107,22 @@ public String getDescription() {
 
 public void setDescription(String description) {
 	this.description = description;
+}
+
+public String getName() {
+	return name;
+}
+
+public void setName(String name) {
+	this.name = name;
+}
+
+public List<Appreciation> getAppreciations() {
+	return appreciations;
+}
+
+public void setAppreciations(List<Appreciation> appreciations) {
+	this.appreciations = appreciations;
 }
 
 	

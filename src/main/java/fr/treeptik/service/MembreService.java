@@ -23,7 +23,7 @@ public class MembreService {
 
 	@Transactional
 	public Membre save(Membre membre) throws Exception {
-		logger.debug("appel de la methode save par " + membre.getName());
+		logger.debug("appel de la methode save par " + membre.getName()+ membre.getPreference());
 		try {
 			return membreDAO.save(membre);
 		} catch (PersistenceException e) {

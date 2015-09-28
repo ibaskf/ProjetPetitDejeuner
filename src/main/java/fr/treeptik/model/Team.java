@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="team")
 public class Team implements Serializable{
     /**
 	 * 
@@ -31,7 +33,16 @@ public class Team implements Serializable{
 	private List<Membre> membres;
 	
 	@OneToOne
-    private Responsable responsable;
+	private Membre responsable;
+	
+
+	public Membre getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(Membre responsable) {
+		this.responsable = responsable;
+	}
 
 	public Integer getId() {
 		return id;

@@ -13,7 +13,7 @@ import fr.treeptik.model.Appreciation;
 @Repository
 public interface AppreciationDAO extends JpaRepository<Appreciation,Integer>{
 
-	List<Appreciation> findByName(String name);
+
 	Appreciation findById(Integer id);
 	
 	

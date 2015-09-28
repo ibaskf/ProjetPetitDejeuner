@@ -6,9 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="appreciation")
 public class Appreciation implements Serializable {
 	
 
@@ -26,8 +30,8 @@ public class Appreciation implements Serializable {
 	@OneToOne
 	private Membre membre;
 	
-	@OneToOne
-	private PetitDej PetitDej;
+	@ManyToOne
+	private PetitDej petitdej;
 	
 	
 	private Double note;
@@ -50,13 +54,7 @@ public class Appreciation implements Serializable {
 		this.membre = membre;
 	}
 
-	public PetitDej getPetitDej() {
-		return PetitDej;
-	}
-
-	public void setPetitDej(PetitDej petitDej) {
-		PetitDej = petitDej;
-	}
+	
 
 	public Double getNote() {
 		return note;
@@ -72,6 +70,14 @@ public class Appreciation implements Serializable {
 
 	public void setCommentaire(String commentaire) {
 		this.commentaire = commentaire;
+	}
+
+	public PetitDej getPetitdej() {
+		return petitdej;
+	}
+
+	public void setPetitdej(PetitDej petitdej) {
+		this.petitdej = petitdej;
 	}
 	
 	
