@@ -119,15 +119,17 @@ public class InitialisationBase {
 		petitdej.setDate(date);
 		petitdej.setName("petitdej1");
 		petitdej.setMembres(mlist);
+		petitdej.setOrganisateur(m1);
 		
 		petitdej1.setDate(date1);
 		petitdej1.setName("petitdej2");
 		petitdej1.setMembres(mlist1);
+		petitdej1.setOrganisateur(m3);
 		
 		petitdej2.setDate(date2);
 		petitdej2.setName("petitdej3");
 		petitdej2.setMembres(mlist);
-		
+		petitdej2.setOrganisateur(m2);
 		
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

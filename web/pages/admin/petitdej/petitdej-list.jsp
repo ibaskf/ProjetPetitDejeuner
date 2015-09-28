@@ -29,8 +29,14 @@
 					<td>${petitDej.type}</td>
 					<td><a href="../petitdej/listparticipant.html?id=${petitDej.id}">Participants</a></td>
 
-					<td><a href="detail.html?id=${petitDej.id}">Detail</a> <a
-						href="delete.html?id=${petitDej.id}">Delete</a></td>
+					<td>
+					<a href="detail.html?id=${petitDej.id}">Detail</a> 
+				
+					<c:if test="${petitDej.organisateur.id==login.id}">
+					<a
+						href="edit.html?id=${petitDej.id}">Delete</a>
+					<a
+						href="delete.html?id=${petitDej.id}">Delete</a></c:if></td>
 				</tr>
 			</c:forEach>
 		</tbody>

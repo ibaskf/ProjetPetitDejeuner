@@ -1,5 +1,6 @@
 package fr.treeptik.controller;
 
+import java.beans.PropertyEditorSupport;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -43,6 +44,8 @@ public class PetitDejController {
 	@Autowired
 	private AppreciationService appreciationservice;
 	
+	
+	
 	@InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(List.class, "membres", new CustomCollectionEditor(List.class) {
@@ -76,23 +79,38 @@ public class PetitDejController {
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd-M-yyyy");
         
         binder.registerCustomEditor(Date.class, "date", new CustomDateEditor(sdf2, false));
-    }
+ 
+        binder.registerCustomEditor(Membre.class, "organisateur", new PropertyEditorSupport() {
+		    @Override
+		    public void setAsText(String text) {
+		    	Membre ch = membreservice.findById(Integer.parseInt(text));
+		        setValue(ch);
+		    }
+		    });
+	}
+	
 
 	@RequestMapping(value = "/new.html", method = RequestMethod.GET)
 	public ModelAndView add() throws ServiceException, DAOException {
+
+		 Authentication authentication = SecurityContextHolder.getContext().
+	             getAuthentication();
+	String membrelogin=authentication.getName();
 		ModelAndView modelAndView = new ModelAndView("petitdej/petitdej");
 		
 		modelAndView.addObject("petitDej", new PetitDej());
 		modelAndView.addObject("membres", membreservice.findAll());
+		modelAndView.addObject("membreloger",membreservice.findByLogin(membrelogin));
 	
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "/detail.html", method = RequestMethod.GET)
 	public ModelAndView detail(@ModelAttribute("id") Integer id) throws ServiceException, DAOException {
+
 		 Authentication authentication = SecurityContextHolder.getContext().
-				               getAuthentication();
-		 String membrelogin=authentication.getName();
+	             getAuthentication();
+	String membrelogin=authentication.getName();
 		String datejour= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		ModelAndView modelAndView = new ModelAndView("petitdej/detail-petitdej");
 		
@@ -121,9 +139,14 @@ public class PetitDejController {
 
 	@RequestMapping(value = "/list.html", method = RequestMethod.GET)
 	public ModelAndView list() {
+		 Authentication authentication = SecurityContextHolder.getContext().
+	             getAuthentication();
+	String membrelogin=authentication.getName();
 		ModelAndView modelAndView = new ModelAndView("petitdej/petitdej-list");
 		try {
+			
 			modelAndView.addObject("petitDejs", petitDejservice.findAll());
+			modelAndView.addObject("login", membreservice.findByLogin(membrelogin));
 		} catch (Exception e) {
 			modelAndView.addObject("error", e.getMessage());
 		}

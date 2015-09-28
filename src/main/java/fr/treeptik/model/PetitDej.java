@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,8 +51,19 @@ public class PetitDej implements Serializable {
    
   @OneToMany(mappedBy="petitdej")
    private List<Appreciation> appreciations;
+  
+  @OneToOne
+  private Membre organisateur;
    
   
+
+public Membre getOrganisateur() {
+	return organisateur;
+}
+
+public void setOrganisateur(Membre organisateur) {
+	this.organisateur = organisateur;
+}
 
 public Integer getId() {
 	return id;

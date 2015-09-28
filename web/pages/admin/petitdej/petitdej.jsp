@@ -12,7 +12,11 @@
 function validateForm()
 {
 	var daten=new Date();
-	 var datenow=daten.getDate()+"-"+(daten.getMonth()+1)+"-"+daten.getFullYear();
+	var st = document.frm.date.value;
+	var pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
+	var dt = new Date(st.replace(pattern,'$3-$2-$1'));
+	var datenow=new Date();
+	// var datenow=daten.getDate()+"-"+(daten.getMonth()+1)+"-"+daten.getFullYear();
 	var re = new RegExp("^([0-9]{2})\-([0-9]{2})\-([0-9]{4})$");
 	alert(datenow)
 if(!re.test(document.frm.date.value) )
@@ -21,7 +25,7 @@ alert("format date :dd-mm-yyyy");
 document.frm.date.focus();
 return false;
 }
-if(document.frm.date.value < datenow){
+if(dt < datenow){
 	alert("veuillez saisir une date posterieure a aujourdhui")
 	return false
 }
@@ -51,6 +55,7 @@ if(document.frm.date.value < datenow){
 	<c:forEach var="membre" items="${membres}">
 		<option value='<c:out value="${membre.id}"/>'><c:out value="${membre.name}"/></option>
 	</c:forEach>
+	<form:input path="organisateur" type="hidden" id="organisateur" value="${membreloger.id}"/>
 		</form:select>
 		
 		<br />

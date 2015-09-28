@@ -16,6 +16,7 @@ public interface MembreDAO extends JpaRepository<Membre,Integer>{
 
 	List<Membre> findByName(String name);
 	Membre findById(Integer id);
+	Membre findByLogin(String log);
 	
 	
 	

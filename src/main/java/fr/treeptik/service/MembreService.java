@@ -73,6 +73,11 @@ public class MembreService {
 		return membreDAO.findByName(name);
 		
 	}
+	
+	public Membre findByLogin(String name){
+		return membreDAO.findByLogin(name);
+		
+	}
 
 	public Membre findById(Integer id){
 		return membreDAO.findById(id);
