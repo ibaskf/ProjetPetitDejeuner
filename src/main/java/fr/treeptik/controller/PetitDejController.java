@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.treeptik.editor.TypeDejEditor;
@@ -34,7 +36,7 @@ import fr.treeptik.service.PetitDejService;
 import fr.treeptik.service.TeamService;
 
 @Controller
-@RequestMapping(value = "/admin/petitdej/")
+@RequestMapping(value = {"utilisateur/petitdej","admin/petitdej"})
 public class PetitDejController {
 
 	@Autowired
@@ -94,13 +96,19 @@ public class PetitDejController {
 	
 
 	@RequestMapping(value = "/new.html", method = RequestMethod.GET)
-	public ModelAndView add() throws ServiceException, DAOException {
-
+	public ModelAndView add( HttpServletRequest request) throws ServiceException, DAOException {
+	
 		 Authentication authentication = SecurityContextHolder.getContext().
 	             getAuthentication();
 	String membrelogin=authentication.getName();
-		ModelAndView modelAndView = new ModelAndView("petitdej/petitdej");
-		
+	ModelAndView modelAndView = null;
+	if ((request.getRequestURL().toString()).contains("admin")){
+	 modelAndView = new ModelAndView("admin/petitdej/petitdej");
+	}
+	else if ((request.getRequestURL().toString()).contains("utilisateur")){
+		 modelAndView = new ModelAndView("utilisateur/petitdej/petitdej");
+		}
+	
 		modelAndView.addObject("petitDej", new PetitDej());
 		modelAndView.addObject("membres", membreservice.findAll());
 		modelAndView.addObject("membreloger",membreservice.findByLogin(membrelogin));
@@ -109,13 +117,20 @@ public class PetitDejController {
 	}
 	
 	@RequestMapping(value = "/detail.html", method = RequestMethod.GET)
-	public ModelAndView detail(@ModelAttribute("id") Integer id) throws ServiceException, DAOException {
+	public ModelAndView detail(@ModelAttribute("id") Integer id,HttpServletRequest request) throws ServiceException, DAOException {
 
 		 Authentication authentication = SecurityContextHolder.getContext().
 	             getAuthentication();
 	String membrelogin=authentication.getName();
 		String datejour= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-		ModelAndView modelAndView = new ModelAndView("petitdej/detail-petitdej");
+		ModelAndView modelAndView =null;
+		if ((request.getRequestURL().toString()).contains("admin")){
+			 modelAndView = new ModelAndView("admin/petitdej/detail-petitdej");
+			}
+			else if ((request.getRequestURL().toString()).contains("utilisateur")){
+				 modelAndView = new ModelAndView("utilisateur/petitdej/detail-petitdej");
+				}
+		
 		
 		modelAndView.addObject("petitDej", petitDejservice.findById(id));
 		modelAndView.addObject("membres", petitDejservice.find(id));
@@ -129,25 +144,41 @@ public class PetitDejController {
 	}
 
 	@RequestMapping(value = "/edit.html", method = RequestMethod.GET)
-	public ModelAndView edit(@ModelAttribute("id") Integer id) {
+	public ModelAndView edit(@ModelAttribute("id") Integer id,HttpServletRequest request) {
 		try {
-			ModelAndView modelAndView = new ModelAndView("petitdej/petitdej");
+			ModelAndView modelAndView=null;
+			if ((request.getRequestURL().toString()).contains("admin")){
+				 modelAndView = new ModelAndView("admin/petitdej/petitdej");
+				}
+				else if ((request.getRequestURL().toString()).contains("utilisateur")){
+					 modelAndView = new ModelAndView("utilisateur/petitdej/petitdej");
+					}
+			
+			
 			PetitDej petitDej = petitDejservice.findById(id);
 			modelAndView.addObject("petitDej", petitDej);
 			modelAndView.addObject("membres", petitDejservice.find(id));
 			return modelAndView;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return list();
+			return list(request);
 		}
 	}
 
 	@RequestMapping(value = "/list.html", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(HttpServletRequest request) {
 		 Authentication authentication = SecurityContextHolder.getContext().
 	             getAuthentication();
 	String membrelogin=authentication.getName();
-		ModelAndView modelAndView = new ModelAndView("petitdej/petitdej-list");
+	
+	ModelAndView modelAndView=null;
+	if ((request.getRequestURL().toString()).contains("admin")){
+		 modelAndView = new ModelAndView("admin/petitdej/petitdej-list");
+		}
+		else if ((request.getRequestURL().toString()).contains("utilisateur")){
+			 modelAndView = new ModelAndView("utilisateur/petitdej/petitdej-list");
+			}
+	
 		try {
 			
 			modelAndView.addObject("petitDejs", petitDejservice.findAll());
@@ -160,7 +191,7 @@ public class PetitDejController {
 	}
 
 	@RequestMapping(value = "/save.html", method = RequestMethod.POST)
-	public ModelAndView save(@ModelAttribute @Valid PetitDej petitDej,BindingResult result) throws ServiceException {
+	public ModelAndView save(@ModelAttribute @Valid PetitDej petitDej,HttpServletRequest request,BindingResult result) throws ServiceException {
 		 if(result.hasErrors()){
 			 System.out.println(result.getAllErrors().toString());
 			 
@@ -174,7 +205,7 @@ public class PetitDejController {
 			ModelAndView modelAndView = new ModelAndView("redirect:list.html");
 			return modelAndView;
 		} catch (Exception e) {
-			ModelAndView modelAndView = edit(petitDej.getId());
+			ModelAndView modelAndView = edit(petitDej.getId(), request);
 			modelAndView.addObject("error", e.getMessage());
 			return modelAndView;
 		}
@@ -216,9 +247,15 @@ public class PetitDejController {
 
 
 	@RequestMapping(value = "/listparticipant.html", method = RequestMethod.GET)
-	public ModelAndView listparticipant(@ModelAttribute("id") Integer id) {
-
-			ModelAndView modelAndView = new ModelAndView("petitdej/list-participant");
+	public ModelAndView listparticipant(@ModelAttribute("id") Integer id,HttpServletRequest request) {
+		ModelAndView modelAndView=null;
+		if ((request.getRequestURL().toString()).contains("admin")){
+			 modelAndView = new ModelAndView("admin/petitdej/list-participant");
+			}
+			else if ((request.getRequestURL().toString()).contains("utilisateur")){
+				 modelAndView = new ModelAndView("utilisateur/petitdej/list-participant");
+				}
+	
 
 			try {
 				modelAndView.addObject("membres", petitDejservice.find(id));

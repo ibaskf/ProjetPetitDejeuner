@@ -1,15 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
+<title>Membres</title>
 </head>
 <body>
 
-<h3>Agenda</h3>
+	<h3>Listes des Participarts</h3>
 	<c:if test="${not empty error}">
 		<label style="color: red;"><c:out value="${error}" /></label>
 	</c:if>
@@ -18,29 +21,23 @@
 		<tbody>
 			<tr>
 				<th>Nom</th>
-                <th>DATE</th>
+                <th>Prénom</th>
                 <th>Preference</th>
                 
 			</tr>
-			<c:forEach items="${petitDejs}" var="petitDej">
+			<c:forEach items="${membres}" var="membre">
 				<tr>
-					<td>${petitDej.name}</td>
-					<td>${petitDej.date}</td>
-					<td>${petitDej.type}</td>
-					<td><a href="../petitdej/listparticipant.html?id=${petitDej.id}">Participants</a></td>
+					<td>${membre.name}</td>
+					<td>${membre.firstname}</td>
+					<td>${membre.preference}</td>
 
-					<td>
-					<a href="detail.html?id=${petitDej.id}">Detail</a> 
-				
-			
-					<a
-						href="edit.html?id=${petitDej.id}">Edit</a>
-					<a
-						href="delete.html?id=${petitDej.id}">Annuler</a></td>
+					<td><a href="../membre/edit.html?id=${membre.id}">Edit</a> <a
+						href="../membre/delete.html?id=${membre.id}">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	<a href="new.html">Ajout Petit DEJ</a>
+	
+
 </body>
 </html>

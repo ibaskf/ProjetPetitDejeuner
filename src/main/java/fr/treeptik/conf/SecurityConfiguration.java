@@ -3,6 +3,7 @@ package fr.treeptik.conf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -10,22 +11,36 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+
+import java.io.IOException;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
 @Configuration
+@Import({MyAuthenticationSuccessHandler.class })
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DataSource dataSource;
+	
+
 
 	@Bean
 	@Override
 	public AuthenticationManager authenticationManager() throws Exception {
 		return super.authenticationManager();
 	}
+	
+	 @Bean
+	 AuthenticationSuccessHandler authenticationSuccessHandler() {
+	 return new MyAuthenticationSuccessHandler();
+	 }
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -63,11 +78,17 @@ auth.jdbcAuthentication()
 		http.csrf().disable().authorizeRequests()
   		.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')or hasRole('ROLE_USER')")
   		.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
-  		.and().formLogin()
-  		.and().logout()
+  		.and()
+  		 .formLogin()
+  		.loginProcessingUrl("/login")
+  		.successHandler(authenticationSuccessHandler())
+  		.permitAll()
+  		.and()
+  		.logout()
   			.logoutUrl("/logout");
 	}
 
+	
 
 
 

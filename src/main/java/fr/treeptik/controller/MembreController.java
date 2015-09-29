@@ -29,7 +29,7 @@ import fr.treeptik.service.MembreService;
 import fr.treeptik.service.TeamService;
 
 @Controller
-@RequestMapping(value = "/admin/membre")
+@RequestMapping(value = {"utilisateur/membre","admin/membre"})
 public class MembreController {
 
 	@Autowired
@@ -46,18 +46,19 @@ public class MembreController {
 	
 	@RequestMapping(value = "/new.html", method = RequestMethod.GET)
 	public ModelAndView add() throws ServiceException, DAOException {
-		ModelAndView modelAndView = new ModelAndView("membre/membre");
+		ModelAndView modelAndView = new ModelAndView("admin/membre/membre");
 		
 		modelAndView.addObject("membre", new Membre());
 		modelAndView.addObject("teams", teamservice.findAll());
 		modelAndView.addObject("typedej",TypeDej.values());
+	
 		return modelAndView;
 	}
 
 	@RequestMapping(value = "/edit.html", method = RequestMethod.GET)
 	public ModelAndView edit(@ModelAttribute("id") Integer id) {
 		try {
-			ModelAndView modelAndView = new ModelAndView("membre/membre");
+			ModelAndView modelAndView = new ModelAndView("admin/membre/membre");
 			Membre membre = membreservice.findById(id);
 			modelAndView.addObject("membre", membre);
 			return modelAndView;
@@ -68,7 +69,7 @@ public class MembreController {
 
 	@RequestMapping(value = "/list.html", method = RequestMethod.GET)
 	public ModelAndView list() {
-		ModelAndView modelAndView = new ModelAndView("membre/list-membre");
+		ModelAndView modelAndView = new ModelAndView("admin/membre/list-membre");
 		try {
 			modelAndView.addObject("membres", membreservice.findAll());
 		} catch (Exception e) {

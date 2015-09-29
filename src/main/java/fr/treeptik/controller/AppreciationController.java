@@ -3,6 +3,8 @@ package fr.treeptik.controller;
 import java.beans.PropertyEditorSupport;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.type.CustomType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import fr.treeptik.exception.ServiceException;
@@ -25,7 +28,7 @@ import fr.treeptik.service.PetitDejService;
 import fr.treeptik.service.TeamService;
 
 @Controller
-@RequestMapping(value = "admin/appreciation")
+@RequestMapping(value = {"utilisateur/appreciation","admin/apprecition"})
 public class AppreciationController {
 
 	@Autowired
@@ -57,8 +60,15 @@ public class AppreciationController {
 	
 	
 	@RequestMapping(value = "/new.html", method = RequestMethod.GET)
-	public ModelAndView add() {
-		ModelAndView modelAndView = new ModelAndView("apreciation/apreciation");
+	public ModelAndView add(@RequestParam HttpServletRequest request) {
+		ModelAndView modelAndView = null;
+		if ((request.getRequestURL().toString()).contentEquals("admin")){
+		 modelAndView = new ModelAndView("admin/apreciation/apreciation");
+		}
+		else if ((request.getRequestURL().toString()).contentEquals("utilisateur")){
+			 modelAndView = new ModelAndView("utilisateur/apreciation/apreciation");
+			}
+		
 		modelAndView.addObject("apprecition", new Appreciation());
 		return modelAndView;
 	}
@@ -66,7 +76,7 @@ public class AppreciationController {
 	@RequestMapping(value = "/edit.html", method = RequestMethod.GET)
 	public ModelAndView edit(@ModelAttribute("id") Integer id) {
 		try {
-			ModelAndView modelAndView = new ModelAndView("appreciation/appreciation");
+			ModelAndView modelAndView = new ModelAndView("utilisateur/appreciation/appreciation");
 			Appreciation appreciation = appreciationservice.findById(id);
 			modelAndView.addObject("appreciation", appreciation);
 			return modelAndView;
@@ -77,7 +87,7 @@ public class AppreciationController {
 
 	@RequestMapping(value = "/list.html", method = RequestMethod.GET)
 	public ModelAndView list() {
-		ModelAndView modelAndView = new ModelAndView("appreciation/list-appreciation");
+		ModelAndView modelAndView = new ModelAndView("utilisateur/appreciation/list-appreciation");
 		try {
 			modelAndView.addObject("appreciations", appreciationservice.findAll());
 		} catch (Exception e) {
@@ -95,7 +105,7 @@ public class AppreciationController {
 			} else {
 				appreciationservice.update(appreciation);
 			}
-			ModelAndView modelAndView = new ModelAndView("redirect:../petitdej/list.html");
+			ModelAndView modelAndView = new ModelAndView("redirect:../utilisateur/petitdej/list.html");
 			return modelAndView;
 		} catch (Exception e) {
 			ModelAndView modelAndView = edit(appreciation.getId());

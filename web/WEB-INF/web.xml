@@ -16,6 +16,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>fr.treeptik.conf.ApplicationConfiguration</param-value>
 		</init-param>
+		
 	</servlet>
 	
 </web-app>

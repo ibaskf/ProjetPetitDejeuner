@@ -48,13 +48,13 @@
 					<c:if test="${(petitDej.date gt datejour)}">
 					<td valign="bottom">
 					<c:forEach items="${membres}" var="membre">
-				
+					<c:if test="${membre.login==login }">
 					
 					
 					<c:set var="membreid" scope="session" value="${membre.id}"></c:set>
 					  <p><a href="deletepart.html?id=${petitDej.id}&idm=${membre.id}">Delete</a><p>
 					</p>
-					
+					</c:if>
 				
 					</c:forEach>
 					</td>
@@ -70,7 +70,7 @@
 					</c:if>	
 						
 							
-	 <c:if test="${(petitDej.date lt datejour) && (petitDej.prix==NULL)}">   
+	 <c:if test="${(petitDej.date lt datejour) && (petitDej.prix==NULL)&&(petitDej.organisateur.id==mbloger.id)}">   
 					 <TD>
 	     <c:set var="dateform" value="${fn:split(petitDej.date, '-')}" />
 	    

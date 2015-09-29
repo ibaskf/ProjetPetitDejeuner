@@ -37,7 +37,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
 @Configuration
 @ComponentScan(basePackages = "fr.treeptik")
-@Import({ SecurityConfiguration.class,MyAuthenticationSuccessHandler.class })
+@Import({ SecurityConfiguration.class})
 
 @EnableWebMvc
 @PropertySource(value = "classpath:config.properties", name = "config")
@@ -105,7 +105,7 @@ public class ApplicationConfiguration extends WebMvcConfigurerAdapter{
 	public UrlBasedViewResolver urlBasedViewResolver() {
 		UrlBasedViewResolver res = new InternalResourceViewResolver();
 		res.setViewClass(JstlView.class);
-		res.setPrefix("/pages/admin/");
+		res.setPrefix("/pages/");
 		res.setSuffix(".jsp");
 		return res;
 	}
