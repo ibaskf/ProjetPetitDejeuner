@@ -57,6 +57,12 @@ if(dt < datenow){
 	</c:forEach>
 	<form:input path="organisateur" type="hidden" id="organisateur" value="${membreloger.id}"/>
 		</form:select>
+		<br/>
+<label>Type</label>
+		 <form:radiobuttons items="${typedej}"
+						path="type" />
+				<form:errors path="type" cssClass="error" />	
+	
 		
 		<br />
 		<input type="submit" value="valider" />

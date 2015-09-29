@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import fr.treeptik.editor.TypeDejEditor;
 import fr.treeptik.exception.DAOException;
 import fr.treeptik.exception.ServiceException;
 import fr.treeptik.model.Appreciation;
 import fr.treeptik.model.Membre;
 import fr.treeptik.model.PetitDej;
+import fr.treeptik.model.TypeDej;
 import fr.treeptik.service.AppreciationService;
 import fr.treeptik.service.MembreService;
 import fr.treeptik.service.PetitDejService;
@@ -87,6 +89,7 @@ public class PetitDejController {
 		        setValue(ch);
 		    }
 		    });
+    	binder.registerCustomEditor(TypeDej.class,new TypeDejEditor(TypeDej.class));
 	}
 	
 
@@ -101,7 +104,7 @@ public class PetitDejController {
 		modelAndView.addObject("petitDej", new PetitDej());
 		modelAndView.addObject("membres", membreservice.findAll());
 		modelAndView.addObject("membreloger",membreservice.findByLogin(membrelogin));
-	
+		modelAndView.addObject("typedej",TypeDej.values());
 		return modelAndView;
 	}
 	
@@ -117,7 +120,9 @@ public class PetitDejController {
 		modelAndView.addObject("petitDej", petitDejservice.findById(id));
 		modelAndView.addObject("membres", petitDejservice.find(id));
 		modelAndView.addObject("login", membrelogin);
+		modelAndView.addObject("mbloger", membreservice.findByLogin(membrelogin));
 		modelAndView.addObject("datejour", datejour);
+		
 		modelAndView.addObject("appreciation", new Appreciation());
 		modelAndView.addObject("appreciations", appreciationservice.findByPetitDej(petitDejservice.findById(id)));
 		return modelAndView;
