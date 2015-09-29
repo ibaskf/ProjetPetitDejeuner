@@ -81,7 +81,7 @@
 	</tr>
 	</c:forEach>
 	</tbody></table>
-	
+
 	<c:if test="${(petitDej.date lt datejour)}">
 	<form:form action="../appreciation/save.html" commandName="appreciation" method="POST">
 		<c:if test="${appreciation.membre.id ==membreid}">

@@ -61,7 +61,7 @@ auth.jdbcAuthentication()
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests()
-  		.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
+  		.antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')or hasRole('ROLE_USER')")
   		.antMatchers("/dba/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_DBA')")
   		.and().formLogin()
   		.and().logout()

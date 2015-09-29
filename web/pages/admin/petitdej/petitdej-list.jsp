@@ -34,9 +34,9 @@
 				
 					<c:if test="${petitDej.organisateur.id==login.id}">
 					<a
-						href="edit.html?id=${petitDej.id}">Delete</a>
+						href="edit.html?id=${petitDej.id}">Edit</a>
 					<a
-						href="delete.html?id=${petitDej.id}">Delete</a></c:if></td>
+						href="delete.html?id=${petitDej.id}">Annuler</a></c:if></td>
 				</tr>
 			</c:forEach>
 		</tbody>
