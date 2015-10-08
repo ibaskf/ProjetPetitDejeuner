@@ -1,13 +1,11 @@
 package fr.treeptik.controller;
 
 import java.beans.PropertyEditorSupport;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.hibernate.type.CustomType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -21,11 +19,9 @@ import fr.treeptik.exception.ServiceException;
 import fr.treeptik.model.Appreciation;
 import fr.treeptik.model.Membre;
 import fr.treeptik.model.PetitDej;
-import fr.treeptik.model.Team;
 import fr.treeptik.service.AppreciationService;
 import fr.treeptik.service.MembreService;
 import fr.treeptik.service.PetitDejService;
-import fr.treeptik.service.TeamService;
 
 @Controller
 @RequestMapping(value = {"utilisateur/appreciation","admin/apprecition"})
@@ -61,6 +57,7 @@ public class AppreciationController {
 	
 	@RequestMapping(value = "/new.html", method = RequestMethod.GET)
 	public ModelAndView add(@RequestParam HttpServletRequest request) {
+
 		ModelAndView modelAndView = null;
 		if ((request.getRequestURL().toString()).contentEquals("admin")){
 		 modelAndView = new ModelAndView("admin/apreciation/apreciation");
@@ -105,7 +102,7 @@ public class AppreciationController {
 			} else {
 				appreciationservice.update(appreciation);
 			}
-			ModelAndView modelAndView = new ModelAndView("redirect:../utilisateur/petitdej/list.html");
+			ModelAndView modelAndView = new ModelAndView("redirect:../petitdej/list.html");
 			return modelAndView;
 		} catch (Exception e) {
 			ModelAndView modelAndView = edit(appreciation.getId());

@@ -4,10 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" 
            uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+ <%@include  file="../../header.html" %>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="../../style/bootstrap-3.3.5-dist/css/bootstrap.min.css"
+	rel="stylesheet">
 <script type="text/javascript"> 
 function validateForm()
 {
@@ -33,6 +35,7 @@ if(dt < datenow){
 </script>
 </head>
 <body>
+<div align="center">
 	<c:if test="${not empty error}">
 		<label style="color: red;"><c:out value="${error}" /></label>
 	</c:if>
@@ -67,5 +70,6 @@ if(dt < datenow){
 		<br />
 		<input type="submit" value="valider" />
 	</form:form>
+	</div>
 </body>
 </html>

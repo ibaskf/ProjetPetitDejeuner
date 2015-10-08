@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+ <%@include  file="../../header.html" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +12,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div align="center">
 <h3>Agenda</h3>
 	<c:if test="${not empty error}">
 		<label style="color: red;"><c:out value="${error}" /></label>
@@ -81,8 +82,14 @@
 		<form:input path="date" type="hidden" id="date" value="${dateform[2]}-${dateform[1]}-${dateform[0]}"/>
 		<form:input path="type" type="hidden" id="type" value="${petitDej.type}"/>
 		<form:input path="description" type="hidden" id="description" value="${petitDej.description}"/>
-		<form:input path="membres" type="hidden" id="membres" value="${petitDej.membres}"/>
-		
+<%-- 		<form:input path="membres" type="hidden" id="membres" value="${petitDej.membres}"/> --%>
+	<div style="display:none;">
+
+
+	 <c:forEach var="membre" items="${petitDej.membres}">  
+		<form:checkbox  id="membre" path="membres" value="${membre.id}" label="${membre.id}" checked=""/> 
+		</c:forEach>
+	</div>
 		<form:input id="prix" path="prix" type="text" />	<input type="submit" value="valider" /></form:form></TD>
                </c:if>
 							
@@ -111,9 +118,11 @@
 
 	<c:if test="${(petitDej.date lt datejour)}">
 	<form:form action="../appreciation/save.html" commandName="appreciation" method="POST">
-		<c:if test="${appreciation.membre.id ==membreid}">
+		<c:if test="${appreciation.membre.id ==mbloger.id}">
+
+	
 		<form:hidden path="id" />
-		<form:input path="membre" type="hidden" id="membre.id" value="${membreid}"/>
+		<form:input path="membre" type="hidden" id="membre.id" value="${mbloger.id}"/>
 			<form:input path="petitdej" type="hidden" id="petitdej.id" value="${petitDej.id}"/>
 		<label>Note:</label>
 		<form:input path="note" id="note" />
@@ -126,5 +135,6 @@
 	</form:form>
 	</c:if>
 	<a href="new.html">Ajout Petit DEJ</a>
+	</div>
 </body>
 </html>

@@ -9,14 +9,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import fr.treeptik.dao.PetitDejDAO;
-
 import fr.treeptik.exception.ServiceException;
 import fr.treeptik.model.Membre;
 import fr.treeptik.model.PetitDej;
 import fr.treeptik.model.User;
 import fr.treeptik.service.MembreService;
-
 import fr.treeptik.service.PetitDejService;
 import fr.treeptik.service.UserService;
 
@@ -111,7 +108,7 @@ public class InitialisationBase {
 		
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd-M-yyyy");
 	
-		Date date1 = sdf.parse("12-09-2015");
+		Date date1 = sdf.parse("12-10-2015");
 		SimpleDateFormat sdf2 = new SimpleDateFormat("dd-M-yyyy");
 	
 		Date date2 = sdf.parse("28-09-2015");

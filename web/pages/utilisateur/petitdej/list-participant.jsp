@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core_rt"%>
 <%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="fmt"%>
+ <%@include  file="../../header.html" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +12,7 @@
 <title>Membres</title>
 </head>
 <body>
-
+<div align="center">
 	<h3>Listes des Participarts</h3>
 	<c:if test="${not empty error}">
 		<label style="color: red;"><c:out value="${error}" /></label>
@@ -31,13 +32,12 @@
 					<td>${membre.firstname}</td>
 					<td>${membre.preference}</td>
 
-					<td><a href="../membre/edit.html?id=${membre.id}">Edit</a> <a
-						href="../membre/delete.html?id=${membre.id}">Delete</a></td>
+
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-	
+	</div>
 
 </body>
 </html>

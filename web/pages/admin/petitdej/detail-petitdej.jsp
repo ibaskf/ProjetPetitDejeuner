@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div align="center">
 <h3>Agenda</h3>
 	<c:if test="${not empty error}">
 		<label style="color: red;"><c:out value="${error}" /></label>
@@ -126,5 +126,6 @@
 	</form:form>
 	</c:if>
 	<a href="new.html">Ajout Petit DEJ</a>
+	</div>
 </body>
 </html>

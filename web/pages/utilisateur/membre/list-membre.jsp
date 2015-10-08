@@ -11,7 +11,7 @@
 <title>Membres</title>
 </head>
 <body>
-
+<div align="center">
 	<h3>Listes des Membres</h3>
 	<c:if test="${not empty error}">
 		<label style="color: red;"><c:out value="${error}" /></label>
@@ -38,6 +38,6 @@
 		</tbody>
 	</table>
 	<a href="new.html">Ajout Membre</a>
-
+</div>
 </body>
 </html>

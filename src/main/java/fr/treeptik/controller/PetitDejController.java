@@ -192,11 +192,15 @@ public class PetitDejController {
 
 	@RequestMapping(value = "/save.html", method = RequestMethod.POST)
 	public ModelAndView save(@ModelAttribute @Valid PetitDej petitDej,HttpServletRequest request,BindingResult result) throws ServiceException {
-		 if(result.hasErrors()){
+		
+		System.out.println(petitDej.toString());
+		
+		if(result.hasErrors()){
 			 System.out.println(result.getAllErrors().toString());
 			 
 			 }
 		try {
+			
 			if (petitDej.getId() == null) {
 				petitDejservice.save(petitDej);
 			} else {

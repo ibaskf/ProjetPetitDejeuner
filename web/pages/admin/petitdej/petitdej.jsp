@@ -33,6 +33,7 @@ if(dt < datenow){
 </script>
 </head>
 <body>
+<div align="center">
 	<c:if test="${not empty error}">
 		<label style="color: red;"><c:out value="${error}" /></label>
 	</c:if>
@@ -67,5 +68,6 @@ if(dt < datenow){
 		<br />
 		<input type="submit" value="valider" />
 	</form:form>
+	</div>
 </body>
 </html>
