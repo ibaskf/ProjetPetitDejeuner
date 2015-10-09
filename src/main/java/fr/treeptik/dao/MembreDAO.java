@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import fr.treeptik.model.Membre;
 import fr.treeptik.model.PetitDej;
+import fr.treeptik.model.Team;
 
 
 @Repository
@@ -17,6 +18,9 @@ public interface MembreDAO extends JpaRepository<Membre,Integer>{
 	List<Membre> findByName(String name);
 	Membre findById(Integer id);
 	Membre findByLogin(String log);
+	
+	
+
 	
 	
 	

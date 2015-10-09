@@ -29,6 +29,7 @@ import fr.treeptik.exception.ServiceException;
 import fr.treeptik.model.Appreciation;
 import fr.treeptik.model.Membre;
 import fr.treeptik.model.PetitDej;
+import fr.treeptik.model.Team;
 import fr.treeptik.model.TypeDej;
 import fr.treeptik.service.AppreciationService;
 import fr.treeptik.service.MembreService;
@@ -47,6 +48,9 @@ public class PetitDejController {
 	
 	@Autowired
 	private AppreciationService appreciationservice;
+	
+	@Autowired
+	private TeamService teamService;
 	
 	
 	
@@ -92,6 +96,15 @@ public class PetitDejController {
 		    }
 		    });
     	binder.registerCustomEditor(TypeDej.class,new TypeDejEditor(TypeDej.class));
+    	
+    	
+    	  binder.registerCustomEditor(Team.class, "team", new PropertyEditorSupport() {
+    		    @Override
+    		    public void setAsText(String text) {
+    		    	Team ch = teamService.findById(Integer.parseInt(text));
+    		        setValue(ch);
+    		    }
+    		    });
 	}
 	
 
@@ -111,6 +124,7 @@ public class PetitDejController {
 	
 		modelAndView.addObject("petitDej", new PetitDej());
 		modelAndView.addObject("membres", membreservice.findAll());
+		modelAndView.addObject("teams", teamService.findAll());
 		modelAndView.addObject("membreloger",membreservice.findByLogin(membrelogin));
 		modelAndView.addObject("typedej",TypeDej.values());
 		return modelAndView;
@@ -154,10 +168,15 @@ public class PetitDejController {
 					 modelAndView = new ModelAndView("utilisateur/petitdej/petitdej");
 					}
 			
-			
+			 Authentication authentication = SecurityContextHolder.getContext().
+		             getAuthentication();
+		String membrelogin=authentication.getName();
 			PetitDej petitDej = petitDejservice.findById(id);
 			modelAndView.addObject("petitDej", petitDej);
-			modelAndView.addObject("membres", petitDejservice.find(id));
+			modelAndView.addObject("membres", membreservice.findAll());
+			modelAndView.addObject("teams", teamService.findAll());
+			modelAndView.addObject("membreloger",membreservice.findByLogin(membrelogin));
+			modelAndView.addObject("typedej",TypeDej.values());
 			return modelAndView;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -262,7 +281,12 @@ public class PetitDejController {
 	
 
 			try {
+				
+				if(!petitDejservice.find(id).isEmpty()){
 				modelAndView.addObject("membres", petitDejservice.find(id));
+				}else{
+					modelAndView.addObject("membres",teamService.findMembreByTeam(petitDejservice.findById(id).getTeam().getId()));
+				}
 			} catch (ServiceException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

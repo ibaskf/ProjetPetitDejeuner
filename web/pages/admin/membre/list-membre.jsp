@@ -32,7 +32,9 @@
 					<td>${membre.preference}</td>
 
 					<td><a
-						href="delete.html?id=${membre.id}">Delete</a></td>
+						href="delete.html?id=${membre.id}">Delete</a>
+						<a
+						href="edit.html?id=${membre.id}">Edit</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>

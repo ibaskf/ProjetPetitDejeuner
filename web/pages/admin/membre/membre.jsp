@@ -23,13 +23,13 @@
 		 <form:radiobuttons items="${typedej}"
 						path="preference" />
 				<form:errors path="preference" cssClass="error" />
-		<!--  <label>Team:</label>
+	 <label>Team:</label>
 		<form:select path="team" id="teams">
 	<c:forEach var="team" items="${teams}">
 		<option value='<c:out value="${team.id}"/>'><c:out value="${team.name}"/></option>
 	</c:forEach>
 		</form:select>
-		-->
+		 
 		<br />
 		<input type="submit" value="valider" />
 	</form:form>

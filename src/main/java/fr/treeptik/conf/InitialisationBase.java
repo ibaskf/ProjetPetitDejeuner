@@ -12,9 +12,11 @@ import org.springframework.stereotype.Component;
 import fr.treeptik.exception.ServiceException;
 import fr.treeptik.model.Membre;
 import fr.treeptik.model.PetitDej;
+import fr.treeptik.model.Team;
 import fr.treeptik.model.User;
 import fr.treeptik.service.MembreService;
 import fr.treeptik.service.PetitDejService;
+import fr.treeptik.service.TeamService;
 import fr.treeptik.service.UserService;
 
 @Component
@@ -30,11 +32,16 @@ public class InitialisationBase {
 	private MembreService membreService;
 	
 	@Autowired
+	private TeamService teamService;
+	
+	@Autowired
 	private UserService userservice;
 	
 	
 	public void run(){
+		initTeam();
 	initMembre();
+	
 	initPetitdej();
 	inituser();
 	}
@@ -49,22 +56,23 @@ public class InitialisationBase {
 		
 		m1.setFirstname("test");
 		m1.setLogin("admin");
-		
+		m1.setTeam(team2);
 		m1.setName("name");
 		
 		m2=new Membre();
 	
 		m2.setFirstname("testf");
 		m2.setLogin("m2");
-	
+	 	m2.setTeam(team1);
 		m2.setName("name1");
+		
 		
 		
 		m3=new Membre();
 	
 		m3.setFirstname("testf1");
 		m3.setLogin("m3");
-		
+		m3.setTeam(team1);
 		m3.setName("name2");
 		
 		
@@ -79,6 +87,45 @@ public class InitialisationBase {
 			e.printStackTrace();
 		}
 
+		
+		
+		
+	}
+	
+
+
+	private Team team1;
+	private Team team2;
+	private Team team3;
+	private void initTeam() {
+		team1=new Team();
+		team2=new Team();
+		team3=new Team();
+		
+		
+		
+		team1.setName("equipe1");
+		team1.setResponsable(m1);
+		
+		
+		team2.setName("equipe2");
+		team2.setResponsable(m2);
+	
+		team3.setName("equipe3");
+		team3.setResponsable(m3);
+		
+		
+		try {
+			teamService.save(team1);
+			teamService.save(team2);
+			teamService.save(team3);
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		
 		

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import fr.treeptik.dao.TeamDAO;
 import fr.treeptik.exception.DAOException;
 import fr.treeptik.exception.ServiceException;
-
+import fr.treeptik.model.Membre;
 import fr.treeptik.model.Team;
 @Service
 public class TeamService {
@@ -74,6 +74,13 @@ public class TeamService {
 	public Team findById(Integer id){
 		return teamDAO.findById(id);
 	}
+	
+	
+	public List<Membre> findMembreByTeam(Integer id){
+		return teamDAO.findMembreByTeam(id);
+	}
+
+	
 
 	public TeamDAO getTeamDAO() {
 		return teamDAO;

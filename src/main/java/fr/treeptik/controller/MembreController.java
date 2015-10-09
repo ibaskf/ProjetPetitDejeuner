@@ -24,6 +24,7 @@ import fr.treeptik.exception.DAOException;
 import fr.treeptik.exception.ServiceException;
 
 import fr.treeptik.model.Membre;
+import fr.treeptik.model.Team;
 import fr.treeptik.model.TypeDej;
 import fr.treeptik.service.MembreService;
 import fr.treeptik.service.TeamService;
@@ -41,6 +42,13 @@ public class MembreController {
 	protected void initBinder(WebDataBinder binder) {
 	 
 	binder.registerCustomEditor(TypeDej.class,new TypeDejEditor(TypeDej.class));
+	  binder.registerCustomEditor(Team.class, "team", new PropertyEditorSupport() {
+		    @Override
+		    public void setAsText(String text) {
+		    	Team ch = teamservice.findById(Integer.parseInt(text));
+		        setValue(ch);
+		    }
+		    });
 	
 	}
 	
@@ -61,6 +69,8 @@ public class MembreController {
 			ModelAndView modelAndView = new ModelAndView("admin/membre/membre");
 			Membre membre = membreservice.findById(id);
 			modelAndView.addObject("membre", membre);
+			modelAndView.addObject("teams", teamservice.findAll());
+			modelAndView.addObject("typedej",TypeDej.values());
 			return modelAndView;
 		} catch (Exception e) {
 			return list();

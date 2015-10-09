@@ -32,6 +32,10 @@ public class Team implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="team")
 	private List<Membre> membres;
 	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="team")
+	private List<PetitDej> petitdejs;
+	
+	
 	@OneToOne
 	private Membre responsable;
 	
@@ -66,6 +70,14 @@ public class Team implements Serializable{
 
 	public void setMembres(List<Membre> membres) {
 		this.membres = membres;
+	}
+
+	public List<PetitDej> getPetitdejs() {
+		return petitdejs;
+	}
+
+	public void setPetitdejs(List<PetitDej> petitdejs) {
+		this.petitdejs = petitdejs;
 	}
 	
 

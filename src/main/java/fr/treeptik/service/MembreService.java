@@ -13,6 +13,7 @@ import fr.treeptik.dao.MembreDAO;
 import fr.treeptik.exception.DAOException;
 import fr.treeptik.exception.ServiceException;
 import fr.treeptik.model.Membre;
+import fr.treeptik.model.Team;
 @Service
 public class MembreService {
 
@@ -73,6 +74,9 @@ public class MembreService {
 		return membreDAO.findByName(name);
 		
 	}
+	
+	
+	
 	
 	public Membre findByLogin(String name){
 		return membreDAO.findByLogin(name);

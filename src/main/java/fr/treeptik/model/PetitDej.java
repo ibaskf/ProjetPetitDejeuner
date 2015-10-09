@@ -37,6 +37,10 @@ public class PetitDej implements Serializable {
 	@ManyToMany(fetch = FetchType.EAGER)
 	List<Membre> membres;
 	
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Team team;
+	
+	
 	@Temporal(TemporalType.DATE) 
 	private Date date;
 	
@@ -136,6 +140,14 @@ public List<Appreciation> getAppreciations() {
 
 public void setAppreciations(List<Appreciation> appreciations) {
 	this.appreciations = appreciations;
+}
+
+public Team getTeam() {
+	return team;
+}
+
+public void setTeam(Team team) {
+	this.team = team;
 }
 
 	
