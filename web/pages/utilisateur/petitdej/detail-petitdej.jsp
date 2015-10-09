@@ -48,9 +48,12 @@
 					
 					<c:if test="${(petitDej.date gt datejour)}">
 					<td valign="bottom">
-					<c:forEach items="${membres}" var="membre">
-					<c:if test="${membre.login==login }">
 					
+					<c:set var="contains" value="false" />
+					<c:forEach items="${membres}" var="membre">
+					 
+					<c:if test="${membre.login==login }">
+					  <c:set var="contains" value="true" />
 					
 					<c:set var="membreid" scope="session" value="${membre.id}"></c:set>
 					  <p><a href="deletepart.html?id=${petitDej.id}&idm=${membre.id}">Delete</a><p>
@@ -58,6 +61,10 @@
 					</c:if>
 				
 					</c:forEach>
+					
+					<c:if test="${contains ==false}">
+					<p><a href="addpart.html?id=${petitDej.id}&idm=${mbloger.id}">S'incrire</a><p>
+					</c:if>
 					</td>
 						</c:if>
 						

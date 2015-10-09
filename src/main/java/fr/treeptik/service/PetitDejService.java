@@ -86,6 +86,15 @@ public class PetitDejService {
 	
 	}
 	
+	@Transactional
+	public void addparticipant(Integer id,Integer idm) throws DAOException{
+	  
+		petitDejDAO.addParticipant(id, idm);
+			
+	
+	}
+	
+	
 	public List<PetitDej> findByName(String name){
 		return petitDejDAO.findByName(name);
 		

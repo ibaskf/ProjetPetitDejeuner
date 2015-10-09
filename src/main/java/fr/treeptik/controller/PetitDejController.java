@@ -154,6 +154,8 @@ public class PetitDejController {
 		
 		modelAndView.addObject("appreciation", new Appreciation());
 		modelAndView.addObject("appreciations", appreciationservice.findByPetitDej(petitDejservice.findById(id)));
+		
+
 		return modelAndView;
 	}
 
@@ -257,6 +259,22 @@ public class PetitDejController {
 		try {
 			
 				petitDejservice.removeparticipant(id,idm);
+			
+			ModelAndView modelAndView = new ModelAndView("redirect:list.html");
+			return modelAndView;
+		} catch (Exception e) {
+		
+			ModelAndView modelAndView = null;
+			modelAndView.addObject("error", e.getMessage());
+			return modelAndView;
+		}
+	}
+
+	@RequestMapping(value = "/addpart.html", method = RequestMethod.GET)
+	public ModelAndView addpart(@ModelAttribute("id") Integer id,@ModelAttribute("idm") Integer idm) throws ServiceException {
+		try {
+			
+				petitDejservice.addparticipant(id,idm);
 			
 			ModelAndView modelAndView = new ModelAndView("redirect:list.html");
 			return modelAndView;

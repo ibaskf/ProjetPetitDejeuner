@@ -25,5 +25,10 @@ public interface PetitDejDAO extends JpaRepository<PetitDej,Integer>{
 	public void removeParticipant(@Param("id") Integer id,@Param("idm") Integer idm);
 	
 	
+	@Modifying
+	@Query(value="insert into petitdej_membre values(:id,:idm)",nativeQuery=true)
+	public void addParticipant(@Param("id") Integer id,@Param("idm") Integer idm);
+	
+	
 
 }
