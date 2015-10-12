@@ -30,7 +30,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 	        }
 	        if (roles.contains("ROLE_ADMIN")){
 	            try {
-					response.sendRedirect("/ProjetPetitDejeuner/admin/index.jsp");
+					response.sendRedirect("/ProjetPetitDejeuner/admin/index.html");
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
