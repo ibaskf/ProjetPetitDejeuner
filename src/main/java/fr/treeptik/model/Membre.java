@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Entity
 @Table(name="membre")
 public class Membre implements Serializable{
@@ -28,7 +30,9 @@ public class Membre implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 
+@NotEmpty
 private String name;
+@NotEmpty
 private String firstname;
 
 @ManyToOne 

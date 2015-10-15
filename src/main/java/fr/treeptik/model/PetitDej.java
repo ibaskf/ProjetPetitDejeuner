@@ -19,6 +19,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="petitdej")
@@ -32,6 +35,9 @@ public class PetitDej implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
+	
+	@NotEmpty
+	
 	private String name;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -40,7 +46,7 @@ public class PetitDej implements Serializable {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Team team;
 	
-	
+
 	@Temporal(TemporalType.DATE) 
 	private Date date;
 	

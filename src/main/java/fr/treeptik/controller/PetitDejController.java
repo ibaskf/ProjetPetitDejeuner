@@ -212,13 +212,33 @@ public class PetitDejController {
 	}
 
 	@RequestMapping(value = "/save.html", method = RequestMethod.POST)
-	public ModelAndView save(@ModelAttribute @Valid PetitDej petitDej,HttpServletRequest request,BindingResult result) throws ServiceException {
+	public ModelAndView save(@ModelAttribute("petitDej") @Valid PetitDej petitDej,BindingResult result,HttpServletRequest request) throws ServiceException {
 		
-		System.out.println(petitDej.toString());
+		 Authentication authentication = SecurityContextHolder.getContext().
+	             getAuthentication();
+	String membrelogin=authentication.getName();
+	ModelAndView modelAndView = null;
+	if ((request.getRequestURL().toString()).contains("admin")){
+	 modelAndView = new ModelAndView("admin/petitdej/petitdej",result.getModel());
+	}
+	else if ((request.getRequestURL().toString()).contains("utilisateur")){
+		 modelAndView = new ModelAndView("utilisateur/petitdej/petitdej",result.getModel());
+		}
 		
 		if(result.hasErrors()){
-			 System.out.println(result.getAllErrors().toString());
-			 
+		 System.out.println(result.getAllErrors().toString());
+			modelAndView.addObject("petitDej", new PetitDej());
+			try {
+				modelAndView.addObject("membres", membreservice.findAll());
+			
+			modelAndView.addObject("teams", teamService.findAll());
+			modelAndView.addObject("membreloger",membreservice.findByLogin(membrelogin));
+			modelAndView.addObject("typedej",TypeDej.values());
+			return modelAndView;
+			} catch (DAOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	 
 			 }
 		try {
 			
@@ -227,11 +247,12 @@ public class PetitDejController {
 			} else {
 				petitDejservice.update(petitDej);
 			}
-			ModelAndView modelAndView = new ModelAndView("redirect:list.html");
+			 modelAndView = new ModelAndView("redirect:list.html");
+		
 			return modelAndView;
 		} catch (Exception e) {
-			ModelAndView modelAndView = edit(petitDej.getId(), request);
-			modelAndView.addObject("error", e.getMessage());
+			 modelAndView = edit(petitDej.getId(), request);
+			modelAndView.addObject("	", e.getMessage());
 			return modelAndView;
 		}
 	}
@@ -239,15 +260,18 @@ public class PetitDejController {
 
 	@RequestMapping(value = "/delete.html", method = RequestMethod.GET)
 	public ModelAndView delete(@ModelAttribute("id") Integer id) throws ServiceException {
+		
+		ModelAndView modelAndView = null;
 		try {
 			
 				petitDejservice.removeById(id);
 			
-			ModelAndView modelAndView = new ModelAndView("redirect:list.html");
+			 modelAndView = new ModelAndView("redirect:list.html");
 			return modelAndView;
 		} catch (Exception e) {
 		
-			ModelAndView modelAndView = null;
+			
+			
 			modelAndView.addObject("error", e.getMessage());
 			return modelAndView;
 		}

@@ -25,25 +25,7 @@
 		document.getElementById("membres").removeAttribute("required");
 	}
 
-	function validateForm() {
-		var daten = new Date();
-		var st = document.frm.date.value;
-		var pattern = /(\d{2})\-(\d{2})\-(\d{4})/;
-		var dt = new Date(st.replace(pattern, '$3-$2-$1'));
-		var datenow = new Date();
-		// var datenow=daten.getDate()+"-"+(daten.getMonth()+1)+"-"+daten.getFullYear();
-		var re = new RegExp("^([0-9]{2})\-([0-9]{2})\-([0-9]{4})$");
-		alert(datenow)
-		if (!re.test(document.frm.date.value)) {
-			alert("format date :dd-mm-yyyy");
-			document.frm.date.focus();
-			return false;
-		}
-		if (dt < datenow) {
-			alert("veuillez saisir une date posterieure a aujourdhui")
-			return false
-		}
-	}
+
 </script>
  <script>
 $(function() {
@@ -56,16 +38,18 @@ $( "#datepicker" ).datepicker({dateFormat:'dd-mm-yy', minDate: 'today'});
 		<c:if test="${not empty error}">
 			<label style="color: red;"><c:out value="${error}" /></label>
 		</c:if>
-		<form:form action="save.html" commandName="petitDej" name="frm"
-			method="POST" onsubmit="return validateForm()">
+		<form:form action="save.html" commandName="petitDej"
+			method="POST" >
 			<form:hidden path="id" />
 			<label>Nom:</label>
 			<form:input path="name" id="name" required="true" />
+			<p style="color:red;"><form:errors path="name" cssclass="error"></form:errors></p>
+			 
 			<br />
 			<label id="date_label" for="date" title="Date"> </label>
 
 			<label>Date:</label>
-			<input id="datepicker" name="date" type="text"/>
+			<input id="datepicker" name="date" type="text" required/>
 		<!--	<input id="datepicker" name="date" type="date"
 				value="<fmt:formatDate value="${date}" 
         type="date" pattern="dd-MM-yyyy" />" 

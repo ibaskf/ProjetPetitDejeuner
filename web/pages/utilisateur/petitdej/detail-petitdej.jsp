@@ -40,20 +40,28 @@
 					<td>${petitDej.description}</td>
 					
 				<td>
+					<c:set var="contains" value="false" />
 				<c:forEach items="${membres}" var="membre">
+					<c:if test="${membre.login==login }">
+					  <c:set var="contains" value="true" />
+					  </c:if>
 					<p>${membre.name}  ${membre.firstname}<p>
 					</c:forEach>
+					<c:if test="${contains ==false}">
+						<p>${mbloger.name}  ${mbloger.firstname}</p>
+					</c:if>
+						
 					</td>
 					
 					
 					<c:if test="${(petitDej.date gt datejour)}">
 					<td valign="bottom">
 					
-					<c:set var="contains" value="false" />
+				
 					<c:forEach items="${membres}" var="membre">
 					 
 					<c:if test="${membre.login==login }">
-					  <c:set var="contains" value="true" />
+					 
 					
 					<c:set var="membreid" scope="session" value="${membre.id}"></c:set>
 					  <p><a href="deletepart.html?id=${petitDej.id}&idm=${membre.id}">Delete</a><p>
@@ -97,7 +105,7 @@
 		<form:checkbox  id="membre" path="membres" value="${membre.id}" label="${membre.id}" checked=""/> 
 		</c:forEach>
 	</div>
-		<form:input id="prix" path="prix" type="text" />	<input type="submit" value="valider" /></form:form></TD>
+		<form:input id="prix" path="prix" type="text" required="true"/>	<input type="submit" value="valider" /></form:form></TD>
                </c:if>
 							
 				</tr>
@@ -125,7 +133,7 @@
 
 	<c:if test="${(petitDej.date lt datejour)}">
 	<form:form action="../appreciation/save.html" commandName="appreciation" method="POST">
-		<c:if test="${appreciation.membre.id ==mbloger.id}">
+		<c:if test="${(appreciation.membre.id==mbloger.id) && contains==true}">
 
 	
 		<form:hidden path="id" />
@@ -133,9 +141,11 @@
 			<form:input path="petitdej" type="hidden" id="petitdej.id" value="${petitDej.id}"/>
 		<label>Note:</label>
 		<form:input path="note" id="note" />
+			<p style="color:red;"><form:errors path="note" cssclass="error"></form:errors></p>
 		<br />
 			<label>Commentaire:</label>
 		<form:input type="text" path="commentaire" id="commentaire" />
+			<p style="color:red;"><form:errors path="commentaire" cssclass="error"></form:errors></p>
 		<br />
 		<input type="submit" value="valider" />
 		</c:if>
